@@ -1,16 +1,18 @@
 <template>
-  <GeoMap />
+  <!-- <GeoMap /> -->
+  <img alt="Vue logo" src="../assets/images/logo.png">
+  <HelloWorld msg="Welcome to Your Vue.js App"/>
 </template>
 
 <script>
 // import HelloWorld from './components/HelloWorld.vue';
-import GeoMap from '@/views/GeoMap.vue';
+// import GeoMap from '@/views/GeoMap.vue';
+import HelloWorld from '@/components/HelloWorld.vue';
 
 export default {
   name: 'HomeView',
   components: {
-    // HelloWorld
-    GeoMap
+    HelloWorld
   }
 };
 </script>

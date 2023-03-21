@@ -12,9 +12,10 @@ export default {
     data() {
         return {
             map: null,
+            keyword: null,
             markers: [],
-            latitude: 0,
-            longtitude: 0
+            latitude: 33.450701,
+            longtitude: 126.570667
         };
     },
     mounted() {
@@ -36,12 +37,23 @@ export default {
             const container = document.getElementById("map"); // 지도를 담을 DOM 영역
             
             navigator.geolocation.getCurrentPosition(pos => {
+
                 this.latitude = pos.coords.latitude;
                 this.longitude = pos.coords.longitude;
 
                 const options = {
                     // 지도를 생성할 때 필요한 기본 옵션
                     center: new window.kakao.maps.LatLng(this.latitude, this.longitude), // 지도의 중심좌표
+                    level: 3, // 지도의 레벨(확대, 축소 정도)
+                };
+
+                this.map = new window.kakao.maps.Map(container, options); // 지도 생성 및 객체 리턴
+            }, err => {
+                console.log(err.message);
+
+                const options = {
+                    // 지도를 생성할 때 필요한 기본 옵션
+                    center: new window.kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
                     level: 3, // 지도의 레벨(확대, 축소 정도)
                 };
 
@@ -65,5 +77,7 @@ div {
     width: var(--width);
     height: var(--height);
     margin: auto;
+    position: relative;
+    overflow: hidden;
 }
 </style>

@@ -22,6 +22,7 @@ const mutations = {
             state.sampleData = response.data;
         }).catch(error => {
             console.log(error.response);
+            console.log(error);
         });
     }
 };
