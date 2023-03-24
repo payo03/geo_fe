@@ -1,9 +1,7 @@
 <template>
-  <header>
-    <router-link to="/">
-      <h1>SampleVue</h1>
-    </router-link>
-  </header>
+  <router-link to="/">
+    <h1>SampleVue</h1>
+  </router-link>
 </template>
 
 <script>

@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const state = {
-    sampleData: {},
+    sampleData: {}
 
 };
 
@@ -18,6 +18,17 @@ const mutations = {
 
             header: "headerText",
             body: "bodyText"
+        }).then(response => {
+            state.sampleData = response.data;
+        }).catch(error => {
+            console.log(error.response);
+            console.log(error);
+        });
+    },
+    login(state, param) {
+
+        axios.post('/login', {
+            param
         }).then(response => {
             state.sampleData = response.data;
         }).catch(error => {

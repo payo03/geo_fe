@@ -2,6 +2,9 @@ const { defineConfig } = require('@vue/cli-service');
 module.exports = defineConfig({
   transpileDependencies: true,
 
+  // multi-word config
+  lintOnSave: false,
+
   // npm run build target directory (backend dr)
   outputDir: "../geo_be/src/main/resources/static",
 
@@ -15,6 +18,9 @@ module.exports = defineConfig({
         target: "http://localhost:8080",
         changeOrigin: true
       }
+    },
+    client: {
+      overlay: false,
     }
   }
 

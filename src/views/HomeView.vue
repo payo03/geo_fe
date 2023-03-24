@@ -1,18 +1,37 @@
 <template>
-  <!-- <GeoMap /> -->
-  <img alt="Vue logo" src="../assets/images/logo.png">
-  <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <div id="wrapper">
+    <HeaderVue />
+    <LeftVue />
+        <div class="main">
+            <div class="main-content">
+                <div class="container-fluid">
+                    <div class="panel panel-headline">
+
+                      <img alt="Vue logo" src="../assets/images/logo.png">
+                      <HelloWorld msg="Welcome to Your Vue.js App"/>   
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    <FooterVue />
+  </div>
 </template>
 
 <script>
-// import HelloWorld from './components/HelloWorld.vue';
 // import GeoMap from '@/views/GeoMap.vue';
-import HelloWorld from '@/components/HelloWorld.vue';
+import HeaderVue from '../components/Header.vue';
+import LeftVue from '../components/Left.vue';
+import FooterVue from '../components/Footer.vue';
+import HelloWorld from '../views/HelloWorld.vue';
 
 export default {
   name: 'HomeView',
   components: {
-    HelloWorld
+    HelloWorld,
+    HeaderVue,
+    FooterVue,
+    LeftVue,
   }
 };
 </script>
@@ -22,7 +41,6 @@ export default {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  text-align: center;
   color: #2c3e50;
 }
 </style>
