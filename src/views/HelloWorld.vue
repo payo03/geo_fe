@@ -9,7 +9,7 @@
     </p>
 
     <router-link to="/loginView">login</router-link><br>
-    <router-link to="/register">register</router-link><br>
+    <router-link to="/registerView">register</router-link><br>
     
     <br>
     <button @click="callSampleLink">Vue-Spring 테스트</button><br>
