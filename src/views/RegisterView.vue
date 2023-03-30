@@ -47,7 +47,7 @@
 </template>
 
 <script>
-import { mapState } from "vuex";
+import { mapState, mapMutations, mapActions } from "vuex";
 
 export default {
   data() {
@@ -58,18 +58,24 @@ export default {
       number: ''
     }
   },
+  mounted() {
+    
+  },
   methods: {
+    ...mapActions('geoMain', ['register']),
     registerView() {
 
       var map = {
-        email: this.email,
-        password: this.password,
-        name: this.name,
-        number: this.number
+        memberId: this.email,
+        memberPassword: this.password,
+        memberName: this.name,
+        memberNumber: this.number
       }
-
-      this.$store.commit('geoMain/register', map);
+      this.register(map);
     }
+  },
+  computed: {
+    ...mapState('geoMain', ['memberIdList']),
   }
 };
 </script>

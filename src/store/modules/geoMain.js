@@ -1,7 +1,9 @@
+import router from '@/router';
 import axios from 'axios';
 
 const state = {
-    sampleData: {}
+    sampleData: {},
+    memberList: []
 
 };
 
@@ -25,12 +27,39 @@ const mutations = {
             console.log(error);
         });
     },
+    callMemberIdList(state) {
+        axios.post('/memberList', {
+
+        }).then(response => {
+            state.memberList = response.data;
+        }).catch(error => {
+            console.log(error.response);
+            console.log(error);
+        });
+    }
+    
+};
+
+const actions = {
     login(state, param) {
 
         axios.post('/login', {
             param
         }).then(response => {
-            state.sampleData = response.data;
+
+        }).catch(error => {
+            console.log(error.response);
+            console.log(error);
+        });
+    },
+    register(state, param) {
+
+        axios.post('/register', JSON.stringify(param), {
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        }).then(response => {
+            router.push('/');
         }).catch(error => {
             console.log(error.response);
             console.log(error);
@@ -42,5 +71,6 @@ export default {
     namespaced: true,
     state,
     getters,
-    mutations
+    mutations,
+    actions
 };

@@ -15,7 +15,7 @@
               <form class="form-auth-small" @submit.prevent="loginView(loginData)">
                   <div class="form-group">
                       <label for="signin-email" class="control-label sr-only">Email</label>
-                      <input type="email" class="form-control" id="signin-email" v-model="this.email" placeholder="Email">
+                      <input type="email" class="form-control" id="signin-email" v-model="this.id" placeholder="Email">
                   </div>
                   <div class="form-group">
                       <label for="signin-password" class="control-label sr-only">Password</label>
@@ -52,26 +52,27 @@
 </template>
 
 <script>
-import { mapState } from "vuex";
+import { mapState, mapActions } from "vuex";
 
 export default {
   data() {
     return {
-      email: '',
+      id: '',
       password: '',
       remember: false
     }
   },
   methods: {
+    ...mapActions('geoMain', ['login']),
     loginView() {
 
       var map = {
-        email: this.email,
-        password: this.password,
+        memberId: this.id,
+        memberPassword: this.password,
         remember: this.remember
       }
 
-      this.$store.commit('geoMain/login', map);
+      this.login(map);
     }
   },
   computed: {
