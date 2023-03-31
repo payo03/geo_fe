@@ -47,44 +47,46 @@
 </template>
 
 <script>
-import { mapState, mapMutations, mapActions } from "vuex";
+import {mapGetters, mapActions, mapMutations} from "vuex";
 
 export default {
-  data() {
-    return {
-      email: '',
-      password: '',
-      name: '',
-      number: ''
-    }
-  },
-  mounted() {
-    
-  },
-  methods: {
-    ...mapActions('geoMain', ['register']),
-    registerView() {
+    data() {
+        return {email: '', password: '', name: '', number: ''}
+    },
+    mounted() {
+        this.memberList();
+    },
+    methods: {
+        ...mapActions('geoMain', ['register']),
+        ...mapMutations('geoMain', ['memberList']),
+        registerView() {
+            var memberIdList = this.getMemberIdList;
 
-      var map = {
-        memberId: this.email,
-        memberPassword: this.password,
-        memberName: this.name,
-        memberNumber: this.number
-      }
-      this.register(map);
+            if (memberIdList.includes(this.email)) {
+                console.log("this");
+            } else {
+
+                var map = {
+                    memberId: this.email,
+                    memberPassword: this.password,
+                    memberName: this.name,
+                    memberNumber: this.number
+                }
+
+                this.register(map);
+            }
+        }
+    },
+    computed: {
+        ...mapGetters('geoMain', ['getMemberIdList'])
     }
-  },
-  computed: {
-    ...mapState('geoMain', ['memberIdList']),
-  }
 };
 </script>
 
-<style scoped>
+<style scoped="scoped">
 h1 {
-  color: #2F3B52;
-  font-weight: 900;
-  margin: 2.5rem 0 1.5 rem;
+    color: #2F3B52;
+    font-weight: 900;
+    margin: 2.5rem 0 1.5 rem;
 }
-
 </style>

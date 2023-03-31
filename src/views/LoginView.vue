@@ -10,7 +10,6 @@
                   <img src="../assets/images/logo-dark.png" alt="Klorofil Logo">
                 </div>
                 <p class="lead">Login to your account</p>
-                <p class="lead">{{ this.sampleData }}</p>
               </div>
               <form class="form-auth-small" @submit.prevent="loginView(loginData)">
                   <div class="form-group">
@@ -52,7 +51,7 @@
 </template>
 
 <script>
-import { mapState, mapActions } from "vuex";
+import { mapActions } from "vuex";
 
 export default {
   data() {
@@ -74,9 +73,6 @@ export default {
 
       this.login(map);
     }
-  },
-  computed: {
-    ...mapState('geoMain', ['sampleData'])
   }
 };
 </script>

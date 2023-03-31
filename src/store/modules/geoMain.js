@@ -11,66 +11,89 @@ const getters = {
     getSampleData(state) {
 
         return state.sampleData;
+    },
+    getMemberIdList(state) {
+
+        return state.memberList.map(row => row.memberId);
     }
 };
 
 const mutations = {
     callSampleLink(state) {
-        axios.post('/samplevue/samplelink', {
+        axios.post('/rest/vst/samplecall', {
 
-            header: "headerText",
-            body: "bodyText"
-        }).then(response => {
-            state.sampleData = response.data;
-        }).catch(error => {
-            console.log(error.response);
-            console.log(error);
-        });
+                header: "headerText",
+                body: "bodyText", 
+            }, {
+                headers: {
+                    'Content-Type': 'application/json',
+                    Authorization: process.env.VUE_APP_AUTHORIZATION
+                }
+            }).then(response => {
+                state.sampleData = response.data;
+            }).catch(error => {
+                console.log(error.response);
+                console.log(error);
+            });
     },
-    callMemberIdList(state) {
-        axios.post('/memberList', {
+    memberList(state) {
+        axios.post('/rest/vst/memberList', { 
 
-        }).then(response => {
-            state.memberList = response.data;
-        }).catch(error => {
-            console.log(error.response);
-            console.log(error);
-        });
+            }, {
+                headers: {
+                    'Content-Type': 'application/json',
+                    Authorization: process.env.VUE_APP_AUTHORIZATION
+                }
+            }).then(response => {
+                state.memberList = response.data;
+            }).catch(error => {
+                console.log(error.response);
+                console.log(error);
+            });
     }
-    
+
 };
 
 const actions = {
     login(state, param) {
 
-        axios.post('/login', {
-            param
-        }).then(response => {
+        axios.post('/rest/vst/login', 
+            JSON.stringify(param), {
+                headers: {
+                    'Content-Type': 'application/json',
+                    Authorization: process.env.VUE_APP_AUTHORIZATION
+                }
+            }).then(response => {
 
-        }).catch(error => {
-            console.log(error.response);
-            console.log(error);
-        });
+                router.push('/');
+                console.log(response.headers.loginauth);
+            }).catch(error => {
+                console.log(error.response);
+                console.log(error);
+            });
     },
     register(state, param) {
 
-        axios.post('/register', JSON.stringify(param), {
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        }).then(response => {
-            router.push('/');
-        }).catch(error => {
-            console.log(error.response);
-            console.log(error);
-        });
+        axios.post('/rest/vst/register', 
+            JSON.stringify(param), {
+                headers: {
+                    'Content-Type': 'application/json',
+                    Authorization: process.env.VUE_APP_AUTHORIZATION
+                }
+            }).then(response => {
+
+                router.push('/');
+            }).catch(error => {
+                console.log(error.response);
+                console.log(error);
+            });
     }
 };
 
 export default {
-    namespaced: true,
-    state,
-    getters,
-    mutations,
+    namespaced: true, 
+    state, 
+    getters, 
+    mutations, 
     actions
 };
