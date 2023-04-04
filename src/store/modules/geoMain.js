@@ -1,16 +1,17 @@
-import router from '@/router';
-import axios from 'axios';
+import router from '@/router/index.js';
+import axios from '@/router/axiosConfig.js';
+import com from '../common.js';
 
 const state = {
-    sampleData: {},
+    member: JSON.parse(localStorage.getItem('member')),
     memberList: []
 
 };
 
 const getters = {
-    getSampleData(state) {
+    getMemberData(state){
 
-        return state.sampleData;
+        return state.member;
     },
     getMemberIdList(state) {
 
@@ -19,18 +20,20 @@ const getters = {
 };
 
 const mutations = {
-    callSampleLink(state) {
-        axios.post('/rest/vst/samplecall', {
+    login(state, param) {
 
-                header: "headerText",
-                body: "bodyText", 
-            }, {
+        axios.post('/rest/vst/login', 
+            JSON.stringify(param), {
                 headers: {
-                    'Content-Type': 'application/json',
-                    Authorization: process.env.VUE_APP_AUTHORIZATION
+
                 }
             }).then(response => {
-                state.sampleData = response.data;
+
+                router.push('/');
+                
+                // Save the authData object in localStorage
+                com.setToken('authToken', response.headers.loginauth, 60 * 1000 * 2);
+                localStorage.setItem('member', JSON.stringify(response.data.member));
             }).catch(error => {
                 console.log(error.response);
                 console.log(error);
@@ -41,8 +44,7 @@ const mutations = {
 
             }, {
                 headers: {
-                    'Content-Type': 'application/json',
-                    Authorization: process.env.VUE_APP_AUTHORIZATION
+
                 }
             }).then(response => {
                 state.memberList = response.data;
@@ -50,35 +52,21 @@ const mutations = {
                 console.log(error.response);
                 console.log(error);
             });
+    },
+    searchDashboard(state) {
+
     }
 
 };
 
 const actions = {
-    login(state, param) {
-
-        axios.post('/rest/vst/login', 
-            JSON.stringify(param), {
-                headers: {
-                    'Content-Type': 'application/json',
-                    Authorization: process.env.VUE_APP_AUTHORIZATION
-                }
-            }).then(response => {
-
-                router.push('/');
-                console.log(response.headers.loginauth);
-            }).catch(error => {
-                console.log(error.response);
-                console.log(error);
-            });
-    },
     register(state, param) {
 
-        axios.post('/rest/vst/register', 
+        axios.post('/rest/vst/register',
             JSON.stringify(param), {
-                headers: {
-                    'Content-Type': 'application/json',
-                    Authorization: process.env.VUE_APP_AUTHORIZATION
+
+                headers : {
+                    
                 }
             }).then(response => {
 

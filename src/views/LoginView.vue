@@ -51,7 +51,7 @@
 </template>
 
 <script>
-import { mapActions } from "vuex";
+import { mapMutations } from "vuex";
 
 export default {
   data() {
@@ -62,7 +62,7 @@ export default {
     }
   },
   methods: {
-    ...mapActions('geoMain', ['login']),
+    ...mapMutations('geoMain', ['login']),
     loginView() {
 
       var map = {

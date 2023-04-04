@@ -56,7 +56,7 @@
 											class="img-circle" alt="image">
 									</c:otherwise>
 								</c:choose> -->
-								<span>${sessionScope.login.memberName}</span> <i class="icon-submenu lnr lnr-chevron-down"></i></a>
+								<span> {{ this.member.memberName }} </span> <i class="icon-submenu lnr lnr-chevron-down"></i></a>
 							<ul class="dropdown-menu">
 								<!-- <c:choose>
 									<c:when test="${empty sessionScope.login}">
@@ -96,7 +96,7 @@
 </template>
 
 <script>
-import { mapMutations } from "vuex";
+import { mapState, mapMutations } from "vuex";
 export default {
     name: 'header',
 	data() {
@@ -130,6 +130,9 @@ export default {
 			}
 		},
 		...mapMutations('geoMain', ['searchDashboard'])
+	},
+	computed: {
+		...mapState('geoMain', ['member'])
 	}
 };
 </script>

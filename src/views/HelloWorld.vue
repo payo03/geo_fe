@@ -1,26 +1,27 @@
 <template>
-  <div class="hello">
+  <div v-if="checkLogin()" class="hello">
+
+    <p>{{ this.member.memberName }}</p><br>
+    <router-link to="/samplevue">Sample</router-link><br>
+  </div>
+  <div v-else>
     <h1>{{ msg }}</h1>
     <p>
       For a guide and recipes on how to configure / customize this project,<br>
       check out the
       <a href="https://cli.vuejs.org" target="_blank" rel="noopener">vue-cli documentation</a><br>
-      <router-link to="/samplevue" v-if="checkTrue()">Sample</router-link><br>
+      <router-link to="/samplevue">Sample</router-link><br>
     </p>
 
     <router-link to="/loginView">login</router-link><br>
-    <router-link to="/registerView">register</router-link><br>
-    
+    <router-link to="/registerView">register</router-link>
+    <br>    
     <br>
-    <button @click="callSampleLink">Vue-Spring 테스트</button><br>
-    <p>{{ this.sampleData }}</p><br>
-    
-    <textarea v-model="getSampleData.header" />
   </div>
 </template>
 
 <script>
-import { mapState, mapGetters, mapMutations } from "vuex";
+import { mapState } from "vuex";
 
 export default {
   name: 'HelloWorld',
@@ -28,15 +29,17 @@ export default {
     msg: String
   },
   methods: {
-    checkTrue() {
-
-      return true;
-    },
-    ...mapMutations('geoMain', ['callSampleLink'])
+    checkLogin() {
+      var authToken = localStorage.getItem("authToken");
+      
+      if(authToken) 
+        return true;
+      else 
+        return false;
+    }
   },
   computed: {
-    ...mapState('geoMain', ['sampleData']),
-    ...mapGetters('geoMain', ['getSampleData'])
+    ...mapState('geoMain', ['member']),
   }
 };
 </script>
