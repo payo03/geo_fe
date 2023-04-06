@@ -98,10 +98,11 @@
 <script>
 import { mapState, mapMutations } from "vuex";
 export default {
-    name: 'header',
+    name: 'headerVue',
 	data() {
 		return {
-			clickSidebar : true
+			clickSidebar : true,
+			memberName : ''
 		}
 	},
 	mounted() {
@@ -129,7 +130,7 @@ export default {
 				}
 			}
 		},
-		...mapMutations('geoMain', ['searchDashboard'])
+		...mapMutations('geoMain', ['searchDashboard', 'getMemberData'])
 	},
 	computed: {
 		...mapState('geoMain', ['member'])
