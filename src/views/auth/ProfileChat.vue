@@ -98,7 +98,7 @@
 import {mapState} from "vuex";
 
 export default {
-    name: 'HomeView',
+    name: 'ProfileChat',
     data() {
         return {}
     },

@@ -20,25 +20,6 @@ const getters = {
 };
 
 const mutations = {
-    login(state, param) {
-
-        axios.post('/rest/vst/login', 
-            JSON.stringify(param), {
-                headers: {
-
-                }
-            }).then(response => {
-
-                router.push('/');
-                
-                // Save the authData object in localStorage
-                com.setToken('authToken', response.headers.loginauth, 60 * 1000 * 2);
-                localStorage.setItem('member', JSON.stringify(response.data.member));
-            }).catch(error => {
-                console.log(error.response);
-                console.log(error);
-            });
-    },
     memberList(state) {
         axios.post('/rest/vst/memberList', { 
 
@@ -75,7 +56,28 @@ const actions = {
                 console.log(error.response);
                 console.log(error);
             });
-    }
+    },
+    login(state, param) {
+
+        return new Promise((resolve, reject) => {
+            axios.post('/rest/vst/login', 
+                JSON.stringify(param), {
+                    headers: {
+
+                    }
+                }).then(response => {
+
+                    com.setToken('authToken', response.headers.loginauth, 60 * 1000 * 2);
+                    localStorage.setItem('member', JSON.stringify(response.data.member));
+                    
+                    resolve(JSON.stringify(response.data.member));
+                }).catch(error => {
+                    console.log(error.response);
+                    console.log(error);
+                });
+        });
+        
+    },
 };
 
 export default {

@@ -9,9 +9,8 @@ const customAxios = axios.create({
 })
 
 customAxios.interceptors.request.use(config => {
-    const authToken = localStorage.getItem('authToken');
 
-    console.log(authToken);
+    const authToken = localStorage.getItem('authToken');
     if (authToken) {
         config.headers['loginauth'] = authToken;
     }

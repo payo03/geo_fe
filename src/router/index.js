@@ -2,7 +2,6 @@ import { createRouter, createWebHistory } from 'vue-router';
 import MainView from '../views/MainView.vue';
 import LoginView from '../views/LoginView.vue';
 import RegisterView from '../views/RegisterView.vue';
-import SampleVue from '../views/SampleVue.vue';
 import com from '../store/common.js';
 
 const routes = [
@@ -18,11 +17,7 @@ const routes = [
         path: '/registerView',
         name: 'register',
         component: RegisterView
-    }, {
-        path: '/samplevue',
-        name: 'sampleVue',
-        component: SampleVue
-    }
+    }, 
 ];
 
 const router = createRouter({
@@ -31,14 +26,17 @@ const router = createRouter({
 });
 
 router.beforeEach((to, from, next) => {
-
+    
+    var token = com.getToken();
+    console.log(to, from);
     if ((to.path).includes('auth')) {
-    // if (true) {
-        var token = com.getToken();
-        if (token)
+        if (token) {
+            console.log("if");
             next();
-        else
+        } else {
+            console.log("else");
             next('/');
+        }
     } else {
         next();
     }

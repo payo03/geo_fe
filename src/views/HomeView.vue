@@ -1,22 +1,17 @@
 <template>
-  <div v-if="checkLogin()" class="hello">
+  <div v-if="this.member != null" class="hello">
 
     <!-- MAIN -->
     <div class="panel panel-profile">
       <div class="clearfix">
-
         
         <!-- LEFT COLUMN -->
-        <ProfileBase />
-        <!-- END LEFT COLUMN -->     
+        <ProfileBase v-bind:pfMember="this.member"/>
         
         <!-- RIGHT COLUMN -->
         <div class="profile-right">
-
-          <ProfileRight />
-          <!-- TABBED CONTENT -->
-          <ProfileChat />
-          <!-- END TABBED CONTENT -->
+          <ProfileRight />  <!-- TABBED CONTENT -->          
+          <ProfileChat />   <!-- END TABBED CONTENT -->          
         </div>
       </div>
     </div>
@@ -30,7 +25,6 @@
       <p>
         For a guide and recipes on how to configure / customize this project,<br>
         check out the <a href="https://cli.vuejs.org" target="_blank" rel="noopener">vue-cli documentation</a><br>
-        <router-link to="/samplevue">Sample</router-link><br>
       </p>
       <router-link to="/loginView">login</router-link><br>
       <router-link to="/registerView">register</router-link>
@@ -41,18 +35,21 @@
 </template>
 
 <script>
-import ProfileBase from "./auth/ProfileBase.vue";
+import ProfileBase  from "./auth/ProfileBase.vue";
 import ProfileRight from "./auth/ProfileRight.vue";
-import ProfileChat from "./auth/ProfileChat.vue";
+import ProfileChat  from "./auth/ProfileChat.vue";
 import { mapState } from "vuex";
 
 export default {
   name: 'HomeView',
   data() {
 		return {
-
+      
 		}
 	},
+  created() {
+    console.log(this.$route);
+  },
   props: {
     msg: String
   },
@@ -62,14 +59,6 @@ export default {
     ProfileChat
   },
   methods: {
-    checkLogin() {
-      var authToken = localStorage.getItem("authToken");
-      
-      if(authToken) 
-        return true;
-      else 
-        return false;
-    }
   },
   computed: {
     ...mapState('geoMain', ['member']),

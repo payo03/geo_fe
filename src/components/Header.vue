@@ -56,7 +56,10 @@
 											class="img-circle" alt="image">
 									</c:otherwise>
 								</c:choose> -->
-								<span> {{ this.member.memberName }} </span> <i class="icon-submenu lnr lnr-chevron-down"></i></a>
+								<span v-if="this.member != null">
+									{{ this.member.memberName }}
+								</span>
+								<i class="icon-submenu lnr lnr-chevron-down"></i></a>
 							<ul class="dropdown-menu">
 								<!-- <c:choose>
 									<c:when test="${empty sessionScope.login}">
@@ -102,7 +105,6 @@ export default {
 	data() {
 		return {
 			clickSidebar : true,
-			memberName : ''
 		}
 	},
 	mounted() {

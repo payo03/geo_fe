@@ -51,7 +51,8 @@
 </template>
 
 <script>
-import { mapMutations } from "vuex";
+import { mapActions } from "vuex";
+import router from '../router/index.js';
 
 export default {
   data() {
@@ -62,8 +63,8 @@ export default {
     }
   },
   methods: {
-    ...mapMutations('geoMain', ['login']),
-    loginView() {
+    ...mapActions('geoMain', ['login']),
+    async loginView() {
 
       var map = {
         memberId: this.id,
@@ -71,7 +72,13 @@ export default {
         remember: this.remember
       }
 
-      this.login(map);
+      let result = await this.login(map);
+      if(result) {
+        router.push({
+          name: 'main', 
+          params: { member: result }
+        });
+      }
     }
   }
 };
