@@ -11,6 +11,7 @@ const state = {
 const getters = {
     getMemberData(state){
 
+        console.log(state.member);
         return state.member;
     },
     getMemberIdList(state) {
@@ -70,7 +71,7 @@ const actions = {
                     com.setToken('authToken', response.headers.loginauth, 60 * 1000 * 2);
                     localStorage.setItem('member', JSON.stringify(response.data.member));
                     
-                    resolve(JSON.stringify(response.data.member));
+                    resolve(response.data.member);
                 }).catch(error => {
                     console.log(error.response);
                     console.log(error);

@@ -52,7 +52,6 @@
 
 <script>
 import { mapActions } from "vuex";
-import router from '../router/index.js';
 
 export default {
   data() {
@@ -74,10 +73,9 @@ export default {
 
       let result = await this.login(map);
       if(result) {
-        router.push({
-          name: 'main', 
-          params: { member: result }
-        });
+        this.$router.push('/authView');
+      } else {
+        console.log("error");
       }
     }
   }

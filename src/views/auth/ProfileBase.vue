@@ -6,11 +6,11 @@
         <div class="profile-main">
 
             <router-link to="/">
-                <img class="img-circle" width="75" height="75" :src="require('@/assets/images/' + this.memberImage + '.png')" v-if="memberImage != null">
+                <img class="img-circle" width="75" height="75" :src="require('@/assets/images/' + this.member.memberImage + '.png')">
             </router-link>
             <!-- Use mustache syntax to display data -->
-            <h3 class="name">{{ this.memberName }}</h3>
-            <div v-if="this.memberStatus == 0">
+            <h3 class="name">{{ this.member.memberName }}</h3>
+            <div v-if="this.member.memberStatus == 0">
             <a href="#" class="notification-item">
                 <span class="dot bg-success"></span>Online
             </a>
@@ -30,24 +30,24 @@
             <ul class="list-unstyled list-justify">
             <li>Registration Date 
                 <span> 
-                    <!-- <fmt:formatDate value="${sessionScope.login.memberRegisterDate}" pattern="yyyy-MM-dd" /> -->
+                    {{ this.member.memberRegistrationDate.substring(0, 10) }}
                 </span>
             </li>
 
-            <li>Email <span>{{ this.memberId }} <a href="${pageContext.request.contextPath }/edit/updateId">
+            <li>Email <span>{{ this.member.memberId }} <a href="${pageContext.request.contextPath }/edit/updateId">
                 <i class="lnr lnr-pencil"></i></a></span>
             </li>
 
-            <li>Mobile <span>{{ this.memberPhoneNumber }} <a href="${pageContext.request.contextPath }/edit/updatePhoneNumber">
+            <li>Mobile <span>{{ this.member.memberPhoneNumber }} <a href="${pageContext.request.contextPath }/edit/updatePhoneNumber">
                 <i class="lnr lnr-pencil"></i></a></span>
             </li>
 
-            <li>Website <span><a :href="this.memberWebsite">{{ this.memberWebsite }}</a>
+            <li>Website <span><a :href="this.member.memberWebsite">{{ this.member.memberWebsite }}</a>
                 <a href="`${pageContext.request.contextPath}/edit/updateWebsite`"><i class="lnr lnr-pencil"></i></a></span>
             </li>
             </ul>
         </div>
-        
+
         <div class="profile-info">
             <h4 class="heading">Social</h4>
             <ul class="list-inline social-icons">
@@ -61,31 +61,16 @@
 </template>
 
 <script>
-import { mapState } from "vuex";
-
 export default {
     name: 'ProfileBase',
-    props: ['pfMember'],
     data() {
         return {
-            memberStatus: 0,
-            memberImage: this.pfMember.memberImage,
-            memberName: this.pfMember.memberName,
-            memberId: this.pfMember.memberId,
-            memberPhoneNumber: this.pfMember.memberPhoneNumber,
-            memberWebsite: this.pfMember.memberWebsite,
-            memberRegisterDate: this.pfMember.memberRegisterDate,
+            member: JSON.parse(localStorage.getItem('member'))
         }
     },
     methods: {
         
     },
-    computed: {
-        ...mapState('geoMain', ['member'])
-    },
-    created() {
-        console.log(this.pfMember)
-    }
 };
 </script>
 

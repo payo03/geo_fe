@@ -105,6 +105,7 @@ export default {
 	data() {
 		return {
 			clickSidebar : true,
+			member : JSON.parse(localStorage.getItem('member')) ? JSON.parse(localStorage.getItem('member')) : null
 		}
 	},
 	mounted() {
@@ -132,7 +133,7 @@ export default {
 				}
 			}
 		},
-		...mapMutations('geoMain', ['searchDashboard', 'getMemberData'])
+		...mapMutations('geoMain', ['searchDashboard'])
 	},
 	computed: {
 		...mapState('geoMain', ['member'])
