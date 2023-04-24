@@ -6,19 +6,19 @@
         <div class="profile-main">
 
             <router-link to="/">
-                <img class="img-circle" width="75" height="75" :src="require('@/assets/images/' + this.member.memberImage + '.png')">
+                <img class="img-circle" width="75" height="75" :src="require('@/assets/images/' + this.pMember.memberImage + '.png')">
             </router-link>
             <!-- Use mustache syntax to display data -->
-            <h3 class="name">{{ this.member.memberName }}</h3>
-            <div v-if="this.member.memberStatus == 0">
-            <a href="#" class="notification-item">
-                <span class="dot bg-success"></span>Online
-            </a>
+            <h3 class="name">{{ this.pMember.memberName }}</h3>
+            <div v-if="this.pMember.memberStatus != 0">
+                <a href="#" class="notification-item">
+                    <span class="dot bg-success"></span>Online
+                </a>
             </div>
             <div v-else>
-            <a href="#" class="notification-item">
-                <span class="dot bg-warning"></span>Clocking
-            </a>                
+                <a href="#" class="notification-item">
+                    <span class="dot bg-warning"></span>Clocking
+                </a>
             </div>
         </div>
         </div>
@@ -30,19 +30,19 @@
             <ul class="list-unstyled list-justify">
             <li>Registration Date 
                 <span> 
-                    {{ this.member.memberRegistrationDate.substring(0, 10) }}
+                    {{ this.pMember.memberRegistrationDate.substring(0, 10) }}
                 </span>
             </li>
 
-            <li>Email <span>{{ this.member.memberId }} <a href="${pageContext.request.contextPath }/edit/updateId">
+            <li>Email <span>{{ this.pMember.memberId }} <a href="${pageContext.request.contextPath }/edit/updateId">
                 <i class="lnr lnr-pencil"></i></a></span>
             </li>
 
-            <li>Mobile <span>{{ this.member.memberPhoneNumber }} <a href="${pageContext.request.contextPath }/edit/updatePhoneNumber">
+            <li>Mobile <span>{{ this.pMember.memberPhoneNumber }} <a href="${pageContext.request.contextPath }/edit/updatePhoneNumber">
                 <i class="lnr lnr-pencil"></i></a></span>
             </li>
 
-            <li>Website <span><a :href="this.member.memberWebsite">{{ this.member.memberWebsite }}</a>
+            <li>Website <span><a :href="this.pMember.memberWebsite">{{ this.pMember.memberWebsite }}</a>
                 <a href="`${pageContext.request.contextPath}/edit/updateWebsite`"><i class="lnr lnr-pencil"></i></a></span>
             </li>
             </ul>
@@ -65,12 +65,17 @@ export default {
     name: 'ProfileBase',
     data() {
         return {
-            member: JSON.parse(localStorage.getItem('member'))
+            pMember: JSON.parse(localStorage.getItem('member'))
         }
     },
     methods: {
         
     },
+    watch: {
+        updateMember(pMember) {
+            console.log(pMember);
+        }
+    }
 };
 </script>
 

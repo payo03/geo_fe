@@ -47,23 +47,26 @@
 </template>
 
 <script>
-import {mapGetters, mapActions, mapMutations} from "vuex";
+import {mapMutations, mapActions} from "vuex";
 
 export default {
     data() {
-        return {email: '', password: '', name: '', number: ''}
-    },
-    mounted() {
-        this.memberList();
+        return {
+          email: null, 
+          password: null, 
+          name: null, 
+          number: null,
+          pMemberList: []
+        }
     },
     methods: {
-        ...mapActions('geoMain', ['register']),
-        ...mapMutations('geoMain', ['memberList']),
+        ...mapMutations('geoMain', ['register']),
+        ...mapActions('geoMain', ['memberList']),
         registerView() {
-            var memberIdList = this.getMemberIdList;
 
+            var memberIdList = this.pMemberList.map(row => row.memberId);
             if (memberIdList.includes(this.email)) {
-                console.log("this");
+                console.log(this.eamil + " is duplicate");
             } else {
 
                 var map = {
@@ -77,8 +80,11 @@ export default {
             }
         }
     },
-    computed: {
-        ...mapGetters('geoMain', ['getMemberIdList'])
+    created() {
+        var result = this.memberList();
+        result.then((value) => {
+            this.pMemberList = value;
+        })
     }
 };
 </script>

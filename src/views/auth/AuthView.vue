@@ -16,9 +16,9 @@
 
                                 <!-- RIGHT COLUMN -->
                                 <div class="profile-right">
-                                    <ProfileRight />
-                                    <!-- TABBED CONTENT -->
                                     <ProfileChat />
+                                    <!-- TABBED CONTENT -->
+                                    <ProfileTab />
                                     <!-- END TABBED CONTENT -->
                                 </div>
                             </div>
@@ -39,8 +39,8 @@ import LeftVue from '../../components/Left.vue';
 import FooterVue from '../../components/Footer.vue';
 
 import ProfileBase from "./ProfileBase.vue";
-import ProfileRight from "./ProfileRight.vue";
 import ProfileChat from "./ProfileChat.vue";
+import ProfileTab  from "./ProfileTab.vue";
 
 export default {
     name: 'MainView',
@@ -54,8 +54,8 @@ export default {
         FooterVue,
         LeftVue,
         ProfileBase,
-        ProfileRight,
-        ProfileChat
+        ProfileChat,
+        ProfileTab,
     },
     methods: {
 

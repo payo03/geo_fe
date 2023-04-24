@@ -33,12 +33,6 @@ import HeaderVue from '../components/Header.vue';
 import LeftVue from '../components/Left.vue';
 import FooterVue from '../components/Footer.vue';
 
-import ProfileBase  from "./auth/ProfileBase.vue";
-import ProfileRight from "./auth/ProfileRight.vue";
-import ProfileChat  from "./auth/ProfileChat.vue";
-
-import { mapState } from "vuex";
-
 export default {
   name: 'MainView',
   data() {
@@ -50,9 +44,6 @@ export default {
     HeaderVue,
     FooterVue,
     LeftVue,
-    ProfileBase,
-    ProfileRight,
-    ProfileChat
   },
 };
 </script>

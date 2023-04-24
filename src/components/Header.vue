@@ -56,8 +56,8 @@
 											class="img-circle" alt="image">
 									</c:otherwise>
 								</c:choose> -->
-								<span v-if="this.member != null">
-									{{ this.member.memberName }}
+								<span v-if="this.hMember != null">
+									{{ this.hMember.memberName }}
 								</span>
 								<i class="icon-submenu lnr lnr-chevron-down"></i></a>
 							<ul class="dropdown-menu">
@@ -105,7 +105,7 @@ export default {
 	data() {
 		return {
 			clickSidebar : true,
-			member : JSON.parse(localStorage.getItem('member')) ? JSON.parse(localStorage.getItem('member')) : null
+			hMember : localStorage.getItem('member') ? JSON.parse(localStorage.getItem('member')) : null
 		}
 	},
 	mounted() {

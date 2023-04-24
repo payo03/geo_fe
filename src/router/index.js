@@ -32,19 +32,25 @@ const router = createRouter({
 
 router.beforeEach((to, from, next) => {
 
-    // auth 페이지 일때
     console.log(to, from);
-    if ((to.path).includes('auth')) {
-        // 토큰이 있을경우
-        var token = com.getToken();
-        if(token) {
+    var token = com.getToken();
+
+    if ((to.path).includes('auth')) {   // auth 페이지 일때
+        if(token) {                     // 토큰이 있을경우
             next();
         } else {
             next('/');
         }            
+    } else if(to.path == '/') {         // login 하였을때 home화면 link시
+        if(token) {                     // 토큰이 있을경우
+            next('/authView')
+        } else {
+            next();
+        }        
     } else {
         next();
     }
+
 });
 
 export default router;
