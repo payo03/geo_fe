@@ -11,12 +11,12 @@
             <!-- Use mustache syntax to display data -->
             <h3 class="name">{{ this.pMember.memberName }}</h3>
             <div v-if="this.pMember.memberStatus != 0">
-                <a href="#" class="notification-item">
+                <a href="#" class="notification-item" @click="pUpdateStatus">
                     <span class="dot bg-success"></span>Online
                 </a>
             </div>
             <div v-else>
-                <a href="#" class="notification-item">
+                <a href="#" class="notification-item" @click="pUpdateStatus">
                     <span class="dot bg-warning"></span>Clocking
                 </a>
             </div>
@@ -61,6 +61,8 @@
 </template>
 
 <script>
+import {mapActions} from "vuex";
+
 export default {
     name: 'ProfileBase',
     data() {
@@ -68,14 +70,26 @@ export default {
             pMember: JSON.parse(localStorage.getItem('member'))
         }
     },
-    methods: {
-        
-    },
-    watch: {
-        updateMember(pMember) {
-            console.log(pMember);
+    mounted() {
+        if(localStorage.getItem('member')) {
+            this.pMember = JSON.parse(localStorage.getItem('member'))
         }
-    }
+    },
+    methods: {
+        ...mapActions('geoMain', ['updateStatus']),
+        async pUpdateStatus() {
+            
+            switch(this.pMember.memberStatus) {
+                case 0:
+                    this.pMember.memberStatus = 1;
+                    break;
+                case 1:
+                    this.pMember.memberStatus = 0;
+                    break;
+            }
+            this.pMember = await this.updateStatus(this.pMember);
+        }
+    },
 };
 </script>
 
