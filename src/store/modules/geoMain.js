@@ -5,7 +5,6 @@ import com from '../common.js';
 const state = {
     member: JSON.parse(localStorage.getItem('member')),
     memberList: JSON.parse(localStorage.getItem('memberList')),
-    messageList: JSON.parse(localStorage.getItem('messageList')),
 };
 
 const getters = {
@@ -55,11 +54,9 @@ const actions = {
                 }).then(response => {
 
                     com.setToken('authToken', response.headers.loginauth, 60 * 1000 * 30);
-                    localStorage.setItem('member', JSON.stringify(response.data.member));
-                    localStorage.setItem('memberList', JSON.stringify(response.data.memberList));
-                    localStorage.setItem('messageList', JSON.stringify(response.data.messageList));
+                    localStorage.setItem('member', JSON.stringify(response.data));
                     
-                    resolve(response.data.member);
+                    resolve(response.data);
                 }).catch(error => {
                     console.log(error.response);
                     console.log(error);

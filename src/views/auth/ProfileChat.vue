@@ -1,17 +1,24 @@
 <template>
 <h4 class="heading">Message List</h4>
     <div class="awards">
-        to : <input v-model="this.to" type="text">
-        message : <input v-model="message" type="text" @keyup="sendMessage">
-        <div v-for="(member, idx) in this.pMemberList" :key="idx">
-            <span>
-                <img class="img-circle" width="35" height="35" :src="require('@/assets/images/' + member.memberImage + '.png')">{{ member.memberName }}
-            </span>
-            <div v-for="(message, idx) in this.pMessageList" :key="idx">
-                <div v-if="member.memberNumber == message.fromMemberNumber">
-                    <span>{{message.content}}</span>
+        <div class="input-group">
+            <span class="input-group-addon"><i class="fa fa-user"></i></span>
+            <input v-model="this.to" class="form-control" placeholder="Send to..." type="text">
+        </div>
+
+        <ul class="list-unstyled activity-list">
+            <li v-for="(message, messageIdx) in this.pMessageList" :key="messageIdx">   
+                <div :class="[ message.memberName == this.pMember.memberName ? 'right' : 'left']">
+                    <p> <img class="img-circle" width="35" height="35" :src="require('@/assets/images/' + message.memberImage + '.png')"> {{ message.memberName }} </p>
+                    <p>{{message.content}}</p>
                 </div>
-            </div>
+            </li>
+        </ul>
+
+        <br>
+        <div class="input-group">
+            <input v-model="content" class="form-control" type="text" @keyup="enterMessage">
+            <span class="input-group-btn"><button class="btn btn-primary" type="button" @click="sendMessage">Send</button></span>
         </div>
     </div>
 </template>
@@ -25,23 +32,30 @@ export default {
     data() {
         return {
             pMember: JSON.parse(localStorage.getItem('member')),
-            pMemberList: JSON.parse(localStorage.getItem('memberList')),
-            pMessageList: JSON.parse(localStorage.getItem('messageList')),
-            to: '',
-            content: '',
+            pMemberList: [],
+            pMessageList: [],
+            to: null,
+            content: null,
         }
     },
     created() {
-        this.connect();
-        console.log(this.pMessageMemberList);
-        console.log(this.pMessageContentList);
+        this.receive();
+    },
+    mounted() {
+        this.emitter.on('messageTo', memberNumber => {
+            this.to = memberNumber;
+        })
     },
     methods: {
-        sendMessage(e) {
-            if(e.keyCode === 13 && this.to !== '' && this.content !== '') {
+        enterMessage(e) {
+            if(e.keyCode === 13 && this.to !== null && this.content !== null) {
                 this.send();
-                this.content = '';
+                this.content = null;
             }
+        },
+        sendMessage() {
+            this.send();
+            this.content = null;
         },
         send() {
             if (this.stompClient && this.stompClient.connected) {
@@ -53,7 +67,7 @@ export default {
                 this.stompClient.send("/receive", JSON.stringify(map), {});
             }
         },
-        connect() {
+        receive() {
             const serverURL = "http://localhost:8080/chat"
             let socket = new SockJS(serverURL);
             this.stompClient = Stomp.over(socket);
@@ -61,17 +75,24 @@ export default {
             this.stompClient.connect({}, frame => {
                 this.stompClient.subscribe("/send", res => {
 
-                    this.messageList.push(JSON.parse(res.body));
+                    var result = JSON.parse(JSON.parse(JSON.stringify(res.body)));
+                    this.pMessageList = result;
                 });
             }, error => {
                 console.log('소켓 연결 실패', error);
             });
-        }
+        },
     },
 };
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+.right {
+  text-align: right;
+}
 
+.left {
+  text-align: left;
+}
 </style>

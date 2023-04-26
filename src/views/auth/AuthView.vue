@@ -6,25 +6,23 @@
             <div class="main-content">
                 <div class="container-fluid">
 
-                    <div class="hello">
-                        <!-- MAIN -->
-                        <div class="panel panel-profile">
-                            <div class="clearfix">
+                    <!-- MAIN -->
+                    <div class="panel panel-profile">
+                        <div class="clearfix">
 
-                                <!-- LEFT COLUMN -->
-                                <ProfileBase />
+                            <!-- LEFT COLUMN -->
+                            <ProfileBase />
 
-                                <!-- RIGHT COLUMN -->
-                                <div class="profile-right">
-                                    <ProfileChat />
-                                    <!-- TABBED CONTENT -->
-                                    <ProfileTab />
-                                    <!-- END TABBED CONTENT -->
-                                </div>
+                            <!-- RIGHT COLUMN -->
+                            <div class="profile-right">
+                                <ProfileChat />
+                                <!-- TABBED CONTENT -->
+                                <ProfileTab />
+                                <!-- END TABBED CONTENT -->
                             </div>
                         </div>
-                        <!-- MAIN END -->
                     </div>
+                    <!-- MAIN END -->
                 </div>
             </div>
         </div>
@@ -64,10 +62,5 @@ export default {
 </script>
 
 <style>
-#app {
-    font-family: Avenir, Helvetica, Arial, sans-serif;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    color: #2c3e50;
-}
+
 </style>

@@ -17,7 +17,7 @@
           <td>{{ member.memberId }}</td>
           <td>
             <!-- <a :href="`${$pageContext.request.contextPath}/profile/messageForm/${member.memberNumber}`"> -->
-              <button type="submit" class="btn btn-default">
+              <button type="submit" class="btn btn-default" @click="sendTo(member.memberNumber)">
                 <i class="fa fa-plus-square"></i> SEND
               </button>
             <!-- </a> -->
@@ -61,7 +61,9 @@ export default {
   },
   methods: {
     ...mapActions('geoMain', ['memberList']),
-    
+    sendTo: function(memberNumber) {
+      this.emitter.emit('messageTo', memberNumber);
+    }
   },
 };
 </script>
