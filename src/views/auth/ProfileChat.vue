@@ -1,17 +1,23 @@
 <template>
 <h4 class="heading">Message List</h4>
     <div class="awards">
-        <div class="input-group">
+        <div v-if="this.displayMember != null">
+            <img class="img-circle" width="35" height="35" :src="require('@/assets/images/' + this.displayMember.memberImage + '.png')"> {{ this.displayMember.memberName }}
+        </div>
+        <div v-else class="input-group">
             <span class="input-group-addon"><i class="fa fa-user"></i></span>
-            <input v-model="this.to" class="form-control" placeholder="Send to..." type="text">
+            <input v-model="this.to" class="form-control" placeholder="Send to..." type="text">            
         </div>
 
         <ul class="list-unstyled activity-list">
-            <li v-for="(message, messageIdx) in this.pMessageList" :key="messageIdx">   
-                <div :class="[ message.memberName == this.pMember.memberName ? 'right' : 'left']">
-                    <p> <img class="img-circle" width="35" height="35" :src="require('@/assets/images/' + message.memberImage + '.png')"> {{ message.memberName }} </p>
-                    <p>{{message.content}}</p>
+            <li v-for="(message, messageIdx) in this.pMessageList" :key="messageIdx">
+                <div v-if="message.memberName != this.pMember.memberName">
+                    <p class="text-left"> {{message.content}} </p>
                 </div>
+                <div v-else>
+                    <p class="text-right"> {{message.content}} </p>
+                </div>
+                {{ message.sendDate.substring(0, 16) }}
             </li>
         </ul>
 
@@ -34,6 +40,7 @@ export default {
             pMember: JSON.parse(localStorage.getItem('member')),
             pMemberList: [],
             pMessageList: [],
+            displayMember: null,
             to: null,
             content: null,
         }
@@ -44,6 +51,7 @@ export default {
     mounted() {
         this.emitter.on('messageTo', memberNumber => {
             this.to = memberNumber;
+            this.send();
         })
     },
     methods: {
@@ -77,6 +85,7 @@ export default {
 
                     var result = JSON.parse(JSON.parse(JSON.stringify(res.body)));
                     this.pMessageList = result;
+                    this.displayMember = result.find(item => item.fromMemberNumber != this.pMember.memberNumber);
                 });
             }, error => {
                 console.log('소켓 연결 실패', error);
@@ -88,11 +97,5 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-.right {
-  text-align: right;
-}
 
-.left {
-  text-align: left;
-}
 </style>

@@ -36,10 +36,10 @@ export default {
     },
     methods: {
         alarmActive() {
-            this.clickTabBar = true;
+            this.clickTabBar = false;
         },
         memberActive() {
-            this.clickTabBar = false;
+            this.clickTabBar = true;
         }
     },
 };
