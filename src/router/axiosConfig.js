@@ -36,7 +36,6 @@ customAxios.interceptors.response.use(response => {
 }, error => {
 
     localStorage.clear();
-    console.log(localStorage);
     router.push('/');
 });
 
