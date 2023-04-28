@@ -13,7 +13,6 @@ const getters = {
         return state.member;
     },
     getMemberIdList(state) {
-        console.log(state.memberList)
 
         return state.memberList.map(row => row.memberId);
     }
@@ -52,8 +51,8 @@ const actions = {
 
                     }
                 }).then(response => {
-
-                    com.setToken('authToken', response.headers.loginauth, 60 * 1000 * 30);
+                    localStorage.setItem('accessToken', response.headers.accesstoken);
+                    localStorage.setItem('refreshToken', response.headers.refreshtoken);
                     localStorage.setItem('member', JSON.stringify(response.data));
                     
                     resolve(response.data);
@@ -89,7 +88,7 @@ const actions = {
 
                     }
                 }).then(response => {
-                    localStorage.setItem('member', JSON.stringify(param));
+                    if(response != undefined) localStorage.setItem('member', JSON.stringify(param));
 
                     resolve(param);
                 }).catch(error => {

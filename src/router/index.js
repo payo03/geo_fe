@@ -32,7 +32,7 @@ const router = createRouter({
 
 router.beforeEach((to, from, next) => {
 
-    var token = com.getToken();
+    var token = localStorage.getItem('accessToken');
     if ((to.path).includes('auth')) {   // auth 페이지 일때
         if(token) {                     // 토큰이 있을경우
             next();
