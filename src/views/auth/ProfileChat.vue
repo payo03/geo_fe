@@ -76,7 +76,7 @@ export default {
             }
         },
         receive() {
-            const serverURL = "http://localhost:8080/chat"
+            const serverURL = "http://localhost:8080/rest/auth/chat"
             let socket = new SockJS(serverURL);
             this.stompClient = Stomp.over(socket);
 
