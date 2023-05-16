@@ -1,0 +1,24 @@
+Docker 이미지로 Container 실행
+docker run --name [Container-Name] -e MYSQL_ROOT_PASSWORD=[Password] -d -p 3306:3306 [Container-Image]
+
+  # Docker MySQL의 sh 접속
+  docker exec -it [Container-ID] sh
+  
+  # 해당 경로에 생성 확인
+  ls -al /tmp
+  
+  # MySQL 데이터 Dump
+  mysqldump -uroot -p [Database-Name] > /tmp/[File-Name].sql
+  
+  # Docker Container 밖으로 파일 복사
+  docker cp [Container-ID]:/tmp/[File-Name].sql [PC의 저장할 경로]
+
+  # PC의 SQL File을 Docker 안으로 복사
+  docker cp [PC의 SQL 파일 경로] [Container-ID]:/tmp
+  
+  # MySQL 데이터 Import
+  mysql -uroot -p [Database-Name] < /tmp/[File-Name].sql
+  mysql -uroot -p -f [Database-Name] < /tmp/[File-Name].sql
+
+Docker 컨테이너로 Image 생성
+docker commit [Container-Name] [Image-Name]
